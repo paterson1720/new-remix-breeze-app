@@ -98,6 +98,13 @@
         <path d="m7.5 15 5 5 5-5m-10-6 5-5 5 5" vector-effect="non-scaling-stroke"/>
     </symbol>
 
+    <symbol id="twitter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+        xmlns="http://www.w3.org/2000/svg">
+        <path d="M23 3v18a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h18a2 2 0 0 1 2 2Z" vector-effect="non-scaling-stroke"/>
+        <path d="M18 7l-5 5-5-5" vector-effect="non-scaling-stroke"/>
+        <path d="M13 7V21" vector-effect="non-scaling-stroke"/>
+    </symbol>
+
     <symbol id="monitor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
         xmlns="http://www.w3.org/2000/svg">
         <path d="M8 21h8m-4-4v4M4 3h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" vector-effect="non-scaling-stroke"/>

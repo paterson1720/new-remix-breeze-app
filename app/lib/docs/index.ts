@@ -75,7 +75,18 @@ export async function fetchVersions(key: string) {
   const response = await fetch(url.href);
   if (!response.ok) throw Error(`Failed to fetch versions: ${response.status}`);
   const versions = (await response.json()) as string[];
-  return versions;
+
+  // Sort the versions in descending order
+  // Example: ["v1.0.0", "v1.1.12", "v1.15.2"] => ["v1.15.2", "v1.1.12", "v1.0.0"]
+  const sortedVersions = versions.sort((a, b) => {
+    const [aMajor, aMinor, aPatch] = a.slice(1).split(".").map(Number);
+    const [bMajor, bMinor, bPatch] = b.slice(1).split(".").map(Number);
+    if (aMajor !== bMajor) return bMajor - aMajor;
+    if (aMinor !== bMinor) return bMinor - aMinor;
+    return bPatch - aPatch;
+  });
+
+  return sortedVersions;
 }
 
 export async function getVersions(baseUrl: string): Promise<string[]> {

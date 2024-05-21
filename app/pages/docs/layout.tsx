@@ -24,21 +24,20 @@ import { CACHE_CONTROL } from "@/lib/http.server";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { env } from "@/lib/env.server";
 
-export const loader = async ({ params, request }: LoaderFunctionArgs) => {
-  let { lang = "en", version = "v1" } = params;
-  const url = new URL(request.url);
-  const baseUrl = env.DOCS_BASE_URL!; //url.protocol + "//" + url.host;
+export const loader = async ({ params }: LoaderFunctionArgs) => {
+  let { lang = "en", version } = params;
+  const baseUrl = env.DOCS_BASE_URL!;
   const menuCacheKey = `${baseUrl}_:_${lang}_:_${version}`;
 
   let menu = await getMenu(menuCacheKey);
   let versions = await getVersions(baseUrl);
+  const [latestVersion] = versions;
 
   return json({
     menu,
     versions,
-    currentVersion: version,
     lang,
-    isLatest: true,
+    currentVersion: version || latestVersion,
   });
 };
 
@@ -159,8 +158,7 @@ function Header() {
           <div className="flex gap-8">
             <div className="hidden items-center md:flex">
               <HeaderMenuLink to="/docs">Docs</HeaderMenuLink>
-              <HeaderMenuLink to="/docs">Premium Starter Kits</HeaderMenuLink>
-              <HeaderMenuLink to="/https://full-stack-kit.dev">Next.js Kits</HeaderMenuLink>
+              <HeaderMenuLink to="https://full-stack-kit.dev">Next.js Kits</HeaderMenuLink>
             </div>
             <div className="flex items-center gap-2">
               <HeaderLink

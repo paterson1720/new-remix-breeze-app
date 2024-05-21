@@ -64,7 +64,10 @@ export async function seed() {
     ],
   });
 
-  console.log("Seeded database with test user and admin");
+  console.info("Seeded database with test users and roles");
+  console.info("Test user email: ", createdNormalUser.email);
+  console.info("Test user password: Password@123");
+  console.info("🚀 Seed completed ✅");
 }
 
 seed();
