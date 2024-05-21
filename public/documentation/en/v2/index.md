@@ -16,7 +16,8 @@ npx create-remix-breeze@latest
   <a href="/docs/en/getting-started/introduction" aria-label="Getting Started">
     <docs-card>
       <h4 class="text-blue-brand">Getting Started</h4>
-      <p>Start with the <span style="text-decoration:underline">Introduction</span>. Remix-Breeze is a beautifully designed stack for Remix and provides the perfect starting point and developer tools to ship your Remix applications like a breeze. </p>
+      <p>Start with the <span style="text-decoration:underline">Introduction</span>. Remix-Breeze provides the perfect starting point and developer tools to ship your Remix applications like a breeze. Empowering you to ship your next big thing.
+      </p>
     </docs-card>
   </a>
   <a href="/docs/en/packages/remix-breeze-router" aria-label="Remix Breeze Router">

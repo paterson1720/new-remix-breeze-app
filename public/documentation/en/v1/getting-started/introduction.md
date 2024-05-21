@@ -7,7 +7,7 @@ order: 1
 
 ### Remix Breeze
 
-**Remix-Breeze** is a beautifully designed stack for Remix and provides the perfect starting point and developer tools to ship your Remix applications like a breeze. **Remix-Breeze** provides the implementation for your application's login, registration, email verification, password reset, HTML email templates, CLI for CRUD scaffolding, and more.
+**Remix-Breeze** is provides the perfect starting point and developer tools to ship your Remix applications like a breeze. **Remix-Breeze** provides the implementation for your application's login, registration, email verification, password reset, HTML email templates, CLI for CRUD scaffolding, and more.
 
 Remix-Breeze is designed using Remix, Typescript, Tailwind CSS and offers a simple routing convention and a powerfull CLI for CRUD scaffolding.
 

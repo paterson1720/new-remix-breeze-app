@@ -27,6 +27,12 @@ import { env } from "@/lib/env.server";
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   let { lang = "en", version } = params;
   const baseUrl = env.DOCS_BASE_URL!;
+
+  if (!version) {
+    const versions = await getVersions(baseUrl);
+    version = versions[0];
+  }
+
   const menuCacheKey = `${baseUrl}_:_${lang}_:_${version}`;
 
   let menu = await getMenu(menuCacheKey);
