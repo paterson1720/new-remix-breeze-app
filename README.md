@@ -4,22 +4,22 @@
 
 Crate a new Remix-Breeze app using the `create-remix-breeze` cli, make sure you replace <YOUR_APP_NAME> with the name of your app.
 
-```bash
+```shellscript
 npx create-remix-breeze@latest <YOUR_APP_NAME>
 cd <YOUR_APP_NAME>
 ```
 
 ### Intall the dependencies
 
-```bash
+```shellscript
 npm install
 ```
 
 ### Setup Prisma
 
-You need to to run these commands to create the tables in your database and create the prisma client.
+By default Remix-Breeze uses SQLite for easy setup. By running these commands, a dev.db file will be created automatically, and the initial auth tables will be created in the database, and also create the prisma client.
 
-```bash
+```shellscript
 npx prisma db push
 npx prima generate
 ```
@@ -28,13 +28,15 @@ npx prima generate
 
 Run the following command to seed your database to add some initial data. That will add the `user` and `admin` role to your `Role` table and create a test user.
 
-```bash
+```shellscript
 npx prisma db seed
 ```
 
+**Note**: You can use prisma studio to interact with your database by running `npx prisma studio` and navigate to the link displayed in your terminal.
+
 ### Run your development server
 
-```bash
+```shellscript
 npm run dev
 ```
 
@@ -58,7 +60,7 @@ With a single `@remix-breeze/cli g-crud` command, you can scaffold a fully featu
 
 Run this command in your CLI
 
-```bash
+```shellscript
 npx @remix-breeze/cli g-crud -r posts -m "title:string content:text isPublished:boolean"
 ```
 
@@ -70,7 +72,7 @@ After the command executed successfully, you'll get an overview of all the files
 
 Run the following commands to regenerate the prisma client and create the Post table:
 
-```bash
+```shellscript
 npx prisma db push
 npx prima generate
 ```
