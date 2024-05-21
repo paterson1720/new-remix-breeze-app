@@ -1,0 +1,156 @@
+[
+  {
+    "children": [
+      {
+        "attrs": {
+          "title": "Breeze Auth Advanced",
+          "order": 2
+        },
+        "filename": "breeze-auth-advanced.md",
+        "slug": "authentication/breeze-auth-advanced",
+        "hasContent": true,
+        "children": []
+      },
+      {
+        "attrs": {
+          "title": "Mongoose Adapter",
+          "order": 5
+        },
+        "filename": "mongoose-adapter.md",
+        "slug": "authentication/mongoose-adapter",
+        "hasContent": true,
+        "children": []
+      },
+      {
+        "attrs": {
+          "title": "Prisma Adapter",
+          "order": 3
+        },
+        "filename": "prisma-adapter.md",
+        "slug": "authentication/prisma-adapter",
+        "hasContent": true,
+        "children": []
+      },
+      {
+        "attrs": {
+          "title": "Prisma MongoDB Adapter",
+          "order": 4
+        },
+        "filename": "prisma-mongodb-adapter.md",
+        "slug": "authentication/prisma-mongodb-adapter",
+        "hasContent": true,
+        "children": []
+      },
+      {
+        "attrs": {
+          "title": "Breeze Auth Tutorial",
+          "order": 1
+        },
+        "filename": "remix-breeze-auth.md",
+        "slug": "authentication/remix-breeze-auth",
+        "hasContent": true,
+        "children": []
+      }
+    ],
+    "attrs": {
+      "title": "Authentication",
+      "order": 3
+    }
+  },
+  {
+    "children": [
+      {
+        "attrs": {
+          "title": "Building your app",
+          "order": 5
+        },
+        "filename": "building-your-app.md",
+        "slug": "getting-started/building-your-app",
+        "hasContent": true,
+        "children": []
+      },
+      {
+        "attrs": {
+          "title": "Concept Overview",
+          "order": 3
+        },
+        "filename": "concept-overview.md",
+        "slug": "getting-started/concept-overview",
+        "hasContent": true,
+        "children": []
+      },
+      {
+        "attrs": {
+          "title": "Installation",
+          "order": 2
+        },
+        "filename": "installation.md",
+        "slug": "getting-started/installation",
+        "hasContent": true,
+        "children": []
+      },
+      {
+        "attrs": {
+          "title": "Introduction",
+          "order": 1
+        },
+        "filename": "introduction.md",
+        "slug": "getting-started/introduction",
+        "hasContent": true,
+        "children": []
+      },
+      {
+        "attrs": {
+          "title": "Routing",
+          "order": 4
+        },
+        "filename": "routing.md",
+        "slug": "getting-started/routing",
+        "hasContent": true,
+        "children": []
+      }
+    ],
+    "attrs": {
+      "title": "Getting Started",
+      "order": 1
+    }
+  },
+  {
+    "children": [
+      {
+        "attrs": {
+          "title": "remix-breeze/cli",
+          "order": 3
+        },
+        "filename": "remix-breeze-cli.md",
+        "slug": "packages/remix-breeze-cli",
+        "hasContent": true,
+        "children": []
+      },
+      {
+        "attrs": {
+          "title": "remix-breeze/router",
+          "order": 1
+        },
+        "filename": "remix-breeze-router.md",
+        "slug": "packages/remix-breeze-router",
+        "hasContent": true,
+        "children": []
+      },
+      {
+        "attrs": {
+          "title": "remix-breeze/toast",
+          "order": 2
+        },
+        "filename": "remix-breeze-toast.md",
+        "slug": "packages/remix-breeze-toast",
+        "hasContent": true,
+        "children": []
+      }
+    ],
+    "attrs": {
+      "title": "Packages",
+      "order": 2
+    }
+  }
+]
