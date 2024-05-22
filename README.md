@@ -1,4 +1,4 @@
-# Getting Started
+# Quick Start
 
 ### Create a new Remix-Breeze App
 
@@ -6,44 +6,32 @@ Crate a new Remix-Breeze app using the `create-remix-breeze` cli, make sure you 
 
 ```shellscript
 npx create-remix-breeze@latest <YOUR_APP_NAME>
-cd <YOUR_APP_NAME>
 ```
 
-### Intall the dependencies
+By running the `create-remix-breeze@latest` cli the following will happen automatically:
 
-```shellscript
-npm install
-```
-
-### Setup Prisma
-
-By default Remix-Breeze uses SQLite for easy setup. By running these commands, a dev.db file will be created automatically, and the initial auth tables will be created in the database, and also create the prisma client.
-
-```shellscript
-npx prisma db push
-npx prima generate
-```
-
-### Seed the database
-
-Run the following command to seed your database to add some initial data. That will add the `user` and `admin` role to your `Role` table and create a test user.
-
-```shellscript
-npx prisma db seed
-```
+- Initializes a new Remix-Breeze app
+- Installs the dependencies
+- Creates a `.env` file with the initial variables
+- Initializes an empty git repository
+- Setups prisma with a dev SQLite database
+- Creates a test userin the database
 
 **Note**: You can use prisma studio to interact with your database by running `npx prisma studio` and navigate to the link displayed in your terminal.
 
 ### Run your development server
 
+Change directory into your newly created app and run the dev server
+
 ```shellscript
+cd <YOUR_APP_NAME>
 npm run dev
 ```
 
 ### Login to your app
 
 To login you can either register a new user by visiting the `/auth/register`
-or use the following test using that was created with the db seed command.
+or use the following test user that was created with the db seed command.
 
 - **Email**: test@user.com
 - **Password**: Password@123
@@ -52,7 +40,7 @@ or use the following test using that was created with the db seed command.
 
 Remix-Breeze come with a handy CLI that allows you to quickly scaffold CRUD ressources.
 
-### Quickly Scaffold a Blog
+### Let's Quickly Scaffold a Blog
 
 To try out the Remix-Breeze CLI, let's create a blog.
 
@@ -66,11 +54,11 @@ npx @remix-breeze/cli g-crud -r posts -m "title:string content:text isPublished:
 
 **Note**: For the first time it might prompt you to install the CLI. Type "y" to accept.
 
-After the command executed successfully, you'll get an overview of all the files that were created in the project the the model `Post` will be added to the `prisma/prisma.schema` file.
+After the command executed successfully, you'll get an overview of all the files that were created in the project and the model `Post` will be added to the `prisma/prisma.schema` file.
 
 ### Regenerate the Prisma client
 
-Run the following commands to regenerate the prisma client and create the Post table:
+Run the following commands to regenerate the prisma client and automatically create the `Post` table in the database:
 
 ```shellscript
 npx prisma db push
