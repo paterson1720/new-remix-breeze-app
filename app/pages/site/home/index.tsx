@@ -1,5 +1,4 @@
 import type { MetaFunction } from "@remix-run/node";
-import { Link } from "@remix-run/react";
 import SiteLayout from "@/pages/_layouts/site-layout";
 
 import iconsHref from "@/icons.svg";
@@ -67,7 +66,7 @@ export default function Component() {
                   <svg aria-hidden className="h-6 w-6">
                     <use href={`${iconsHref}#github`} />
                   </svg>
-                  <span className="text-sm">Github Repository</span>
+                  <span className="text-sm">Star our Github</span>
                 </li>
               </a>
             </ul>

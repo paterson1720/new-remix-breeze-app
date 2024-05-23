@@ -1,5 +1,5 @@
 import React from "react";
-import { Doc, getDoc } from "@/lib/docs";
+import { Doc, getDoc, getVersions } from "@/lib/docs";
 import { CACHE_CONTROL } from "@/lib/http.server";
 import { HeadersFunction, LoaderFunctionArgs, SerializeFrom, json } from "@remix-run/node";
 import {
@@ -11,18 +11,25 @@ import {
   useRouteError,
 } from "@remix-run/react";
 import iconsHref from "@/icons.svg";
+import { env } from "@/lib/env.server";
 
 export async function loader({ params, request }: LoaderFunctionArgs) {
-  let url = new URL(request.url);
-  let baseUrl = url.protocol + "//" + url.host;
-  let siteUrl = baseUrl + url.pathname;
-  let ogImageUrl = baseUrl + "/images/og.jpg";
+  const url = new URL(request.url);
+  const baseUrl = url.protocol + "//" + url.host;
+  const siteUrl = baseUrl + url.pathname;
+  const ogImageUrl = baseUrl + "/images/breeze-app-dark.png";
+
+  let version = params.version;
+  if (!version) {
+    const versions = await getVersions(env.DOCS_BASE_URL);
+    version = versions[0];
+  }
 
   try {
-    let doc = await getDoc({
-      baseUrl: process.env.DOCS_BASE_URL!,
+    const doc = await getDoc({
+      baseUrl: env.DOCS_BASE_URL,
       lang: params.lang || "en",
-      version: params.version || "v1",
+      version,
       docPath: params["*"] || "index",
     });
     if (!doc) throw json(null, { status: 404 });
@@ -39,16 +46,16 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
  * Inherit the caching headers from the loader so we don't cache 404s
  * */
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
-  let headers = new Headers(loaderHeaders);
+  const headers = new Headers(loaderHeaders);
   headers.set("Vary", "Cookie");
   return headers;
 };
 
 export default function DocPage() {
-  let { doc } = useLoaderData<typeof loader>();
-  let ref = React.useRef<HTMLDivElement>(null);
-  let matches = useMatches();
-  let isDocsIndex = matches.some((match) => match.id.endsWith("$lang.$ref/index"));
+  const { doc } = useLoaderData<typeof loader>();
+  const ref = React.useRef<HTMLDivElement>(null);
+  const matches = useMatches();
+  const isDocsIndex = matches.some((match) => match.id.endsWith("$lang.$ref/index"));
 
   return (
     <div className="xl:flex xl:w-full xl:justify-between xl:gap-8">
@@ -122,8 +129,8 @@ function SmallOnThisPage({ doc }: { doc: SerializeFrom<Doc> }) {
 }
 
 export function ErrorBoundary() {
-  let error = useRouteError();
-  let params = useParams();
+  const error = useRouteError();
+  const params = useParams();
   if (isRouteErrorResponse(error)) {
     return (
       <div className="flex h-[50vh] flex-col items-center justify-center">

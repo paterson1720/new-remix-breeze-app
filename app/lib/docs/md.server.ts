@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-namespace */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getHighlighter, toShikiTheme } from "shiki";
 import rangeParser from "parse-numeric-range";
 import parseFrontMatter from "front-matter";
@@ -14,14 +16,14 @@ export interface ProcessorOptions {
 let processor: Awaited<ReturnType<typeof getProcessor>>;
 export async function processMarkdown(content: string, options?: ProcessorOptions) {
   processor = processor || (await getProcessor(options));
-  let { attributes, body: raw } = parseFrontMatter(content);
-  let vfile = await processor.process(raw);
-  let html = vfile.value.toString();
+  const { attributes, body: raw } = parseFrontMatter(content);
+  const vfile = await processor.process(raw);
+  const html = vfile.value.toString();
   return { attributes, raw, html };
 }
 
 export async function getProcessor(options?: ProcessorOptions) {
-  let [
+  const [
     { unified },
     { default: remarkGfm },
     { default: remarkParse },
@@ -41,18 +43,15 @@ export async function getProcessor(options?: ProcessorOptions) {
     loadPlugins(),
   ]);
 
-  return (
-    unified()
-      .use(remarkParse)
-      .use(plugins.stripLinkExtPlugin, options)
-      .use(plugins.remarkCodeBlocksShiki, options)
-      .use(remarkGfm)
-      .use(remarkRehype, { allowDangerousHtml: true })
-      // @ts-ignore
-      .use(rehypeStringify, { allowDangerousHtml: true })
-      .use(rehypeSlug)
-      .use(rehypeAutolinkHeadings)
-  );
+  return unified()
+    .use(remarkParse)
+    .use(plugins.stripLinkExtPlugin, options)
+    .use(plugins.remarkCodeBlocksShiki, options)
+    .use(remarkGfm)
+    .use(remarkRehype, { allowDangerousHtml: true })
+    .use(rehypeStringify, { allowDangerousHtml: true })
+    .use(rehypeSlug)
+    .use(rehypeAutolinkHeadings);
 }
 
 type InternalPlugin<Input extends string | Unist.Node | undefined, Output> = Unified.Plugin<
@@ -62,7 +61,7 @@ type InternalPlugin<Input extends string | Unist.Node | undefined, Output> = Uni
 >;
 
 export async function loadPlugins() {
-  let [{ visit, SKIP }, { htmlEscape }] = await Promise.all([
+  const [{ visit, SKIP }, { htmlEscape }] = await Promise.all([
     import("unist-util-visit"),
     import("escape-goat"),
   ]);
@@ -83,16 +82,16 @@ export async function loadPlugins() {
     };
   };
 
-  const remarkCodeBlocksShiki: InternalPlugin<UnistNode.Root, UnistNode.Root> = (options) => {
+  const remarkCodeBlocksShiki: InternalPlugin<UnistNode.Root, UnistNode.Root> = () => {
     let theme: ReturnType<typeof toShikiTheme>;
     let highlighterPromise: ReturnType<typeof getHighlighter>;
 
     return async function transformer(tree: UnistNode.Root) {
       theme = theme || toShikiTheme(themeJson as any);
       highlighterPromise = highlighterPromise || getHighlighter({ themes: [theme] });
-      let highlighter = await highlighterPromise;
-      let fgColor = convertFakeHexToCustomProp(highlighter.getForegroundColor(theme.name) || "");
-      let langs: Shiki.Lang[] = [
+      const highlighter = await highlighterPromise;
+      const fgColor = convertFakeHexToCustomProp(highlighter.getForegroundColor(theme.name) || "");
+      const langs: Shiki.Lang[] = [
         "js",
         "json",
         "jsx",
@@ -106,8 +105,8 @@ export async function loadPlugins() {
         "mdx",
         "prisma",
       ];
-      let langSet = new Set(langs);
-      let transformTasks: Array<() => Promise<void>> = [];
+      const langSet = new Set(langs);
+      const transformTasks: Array<() => Promise<void>> = [];
 
       visit(tree, "code", (node) => {
         if (!node.lang || !node.value || !langSet.has(node.lang as Shiki.Lang)) {
@@ -116,9 +115,9 @@ export async function loadPlugins() {
 
         if (node.lang === "js") node.lang = "javascript";
         if (node.lang === "ts") node.lang = "typescript";
-        let language = node.lang;
-        let code = node.value;
-        let {
+        const language = node.lang;
+        const code = node.value;
+        const {
           addedLines,
           highlightLines,
           nodeProperties,
@@ -131,11 +130,11 @@ export async function loadPlugins() {
         return SKIP;
 
         async function highlightNodes() {
-          let tokens = getThemedTokens({ code, language });
-          let children = tokens.map((lineTokens, zeroBasedLineNumber): Hast.Element => {
-            let children = lineTokens.map((token): Hast.Text | Hast.Element => {
-              let color = convertFakeHexToCustomProp(token.color || "");
-              let content: Hast.Text = {
+          const tokens = getThemedTokens({ code, language });
+          const children = tokens.map((lineTokens, zeroBasedLineNumber): Hast.Element => {
+            const children = lineTokens.map((token): Hast.Text | Hast.Element => {
+              const color = convertFakeHexToCustomProp(token.color || "");
+              const content: Hast.Text = {
                 type: "text",
                 // Do not escape the _actual_ content
                 value: token.content,
@@ -158,12 +157,12 @@ export async function loadPlugins() {
               value: "\n",
             });
 
-            let isDiff = addedLines.length > 0 || removedLines.length > 0;
+            const isDiff = addedLines.length > 0 || removedLines.length > 0;
             let diffLineNumber = startingLineNumber - 1;
-            let lineNumber = zeroBasedLineNumber + startingLineNumber;
-            let highlightLine = highlightLines?.includes(lineNumber);
-            let removeLine = removedLines.includes(lineNumber);
-            let addLine = addedLines.includes(lineNumber);
+            const lineNumber = zeroBasedLineNumber + startingLineNumber;
+            const highlightLine = highlightLines?.includes(lineNumber);
+            const removeLine = removedLines.includes(lineNumber);
+            const addLine = addedLines.includes(lineNumber);
             if (!removeLine) {
               diffLineNumber++;
             }
@@ -183,7 +182,7 @@ export async function loadPlugins() {
             };
           });
 
-          let nodeValue = {
+          const nodeValue = {
             type: "element",
             tagName: "pre",
             properties: {
@@ -201,10 +200,10 @@ export async function loadPlugins() {
             ],
           };
 
-          let data = node.data ?? {};
+          const data = node.data ?? {};
           (node as any).type = "element";
           (node as any).tagName = "div";
-          let properties =
+          const properties =
             data.hProperties && typeof data.hProperties === "object" ? data.hProperties : {};
           data.hProperties = {
             ...properties,
@@ -219,11 +218,11 @@ export async function loadPlugins() {
 
         function getCodeBlockMeta() {
           // TODO: figure out how this is ever an array?
-          let meta = Array.isArray(node.meta) ? node.meta[0] : node.meta;
+          const meta = Array.isArray(node.meta) ? node.meta[0] : node.meta;
 
           let metaParams = new URLSearchParams();
           if (meta) {
-            let linesHighlightsMetaShorthand = meta.match(/^\[(.+)\]$/);
+            const linesHighlightsMetaShorthand = meta.match(/^\[(.+)\]$/);
             if (linesHighlightsMetaShorthand) {
               metaParams.set("lines", linesHighlightsMetaShorthand[0]);
             } else {
@@ -231,14 +230,14 @@ export async function loadPlugins() {
             }
           }
 
-          let addedLines = parseLineHighlights(metaParams.get("add"));
-          let removedLines = parseLineHighlights(metaParams.get("remove"));
-          let highlightLines = parseLineHighlights(metaParams.get("lines"));
-          let startValNum = metaParams.has("start") ? Number(metaParams.get("start")) : 1;
-          let startingLineNumber = Number.isFinite(startValNum) ? startValNum : 1;
-          let usesLineNumbers = !metaParams.has("nonumber");
+          const addedLines = parseLineHighlights(metaParams.get("add"));
+          const removedLines = parseLineHighlights(metaParams.get("remove"));
+          const highlightLines = parseLineHighlights(metaParams.get("lines"));
+          const startValNum = metaParams.has("start") ? Number(metaParams.get("start")) : 1;
+          const startingLineNumber = Number.isFinite(startValNum) ? startValNum : 1;
+          const usesLineNumbers = !metaParams.has("nonumber");
 
-          let nodeProperties: { [key: string]: string } = {};
+          const nodeProperties: { [key: string]: string } = {};
           metaParams.forEach((val, key) => {
             if (key === "lines") return;
             nodeProperties[`data-${key}`] = val;
@@ -275,7 +274,7 @@ export async function loadPlugins() {
 
 function parseLineHighlights(param: string | null) {
   if (!param) return [];
-  let range = param.match(/^\[(.+)\]$/);
+  const range = param.match(/^\[(.+)\]$/);
   if (!range) return [];
   return rangeParser(range[1]);
 }
@@ -285,7 +284,7 @@ function convertFakeHexToCustomProp(color: string) {
 }
 
 function isRelativeUrl(test: string) {
-  let regexp = new RegExp("^(?:[a-z]+:)?//", "i");
+  const regexp = new RegExp("^(?:[a-z]+:)?//", "i");
   return !regexp.test(test);
 }
 

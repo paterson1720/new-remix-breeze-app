@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { processMarkdown } from "./md.server";
 import { LRUCache } from "lru-cache";
 import { load as $ } from "cheerio";
@@ -27,13 +28,13 @@ export interface Doc extends Omit<MenuDoc, "hasContent"> {
   }[];
 }
 
-declare global {
-  var menuCache: LRUCache<string, MenuDoc[]>;
-  var docCache: LRUCache<string, Doc>;
-  var versionsCache: LRUCache<string, string[]>;
-}
+const _global = global as typeof globalThis & {
+  menuCache: LRUCache<string, MenuDoc[]>;
+  docCache: LRUCache<string, Doc>;
+  versionsCache: LRUCache<string, string[]>;
+};
 
-let NO_CACHE = env.NO_CACHE;
+const NO_CACHE = env.NO_CACHE;
 
 /**
  * ---------------------
@@ -45,25 +46,27 @@ let NO_CACHE = env.NO_CACHE;
  * let's have simpler and faster deployments with just one origin server, but
  * still distribute the documents across the CDN.
  */
-global.docCache ??= new LRUCache<string, Doc>({
+
+const CACHING_TIME = NO_CACHE ? 1 : 1000 * 60 * 60 * 24; // 1 day
+_global.docCache ??= new LRUCache<string, Doc>({
   max: 300,
-  ttl: NO_CACHE ? 1 : 1000 * 60 * 5, // 5 minutes
+  ttl: CACHING_TIME,
   allowStale: !NO_CACHE,
   noDeleteOnFetchRejection: true,
   fetchMethod: fetchDoc,
 });
 
-global.menuCache ??= new LRUCache<string, MenuDoc[]>({
+_global.menuCache ??= new LRUCache<string, MenuDoc[]>({
   max: 10,
-  ttl: NO_CACHE ? 1 : 300000, // 5 minutes
+  ttl: CACHING_TIME,
   allowStale: !NO_CACHE,
   noDeleteOnFetchRejection: true,
   fetchMethod: fetchMenu,
 });
 
-global.versionsCache ??= new LRUCache<string, string[]>({
+_global.versionsCache ??= new LRUCache<string, string[]>({
   max: 10,
-  ttl: NO_CACHE ? 1 : 300000, // 5 minutes
+  ttl: CACHING_TIME,
   allowStale: !NO_CACHE,
   noDeleteOnFetchRejection: true,
   fetchMethod: fetchVersions,
@@ -90,7 +93,7 @@ export async function fetchVersions(key: string) {
 }
 
 export async function getVersions(baseUrl: string): Promise<string[]> {
-  let versions = await versionsCache.fetch(`${baseUrl}_:_doc_versions`);
+  const versions = await _global.versionsCache.fetch(`${baseUrl}_:_doc_versions`);
   return versions || [];
 }
 
@@ -103,13 +106,13 @@ async function fetchMenu(key: string) {
 
   const menuTree = (await response.json()) as MenuDoc[];
 
-  let sortDocs = (a: MenuDoc, b: MenuDoc) => {
+  const sortDocs = (a: MenuDoc, b: MenuDoc) => {
     return (a.attrs.order || Infinity) - (b.attrs.order || Infinity);
   };
 
   menuTree.sort(sortDocs);
 
-  for (let category of menuTree) {
+  for (const category of menuTree) {
     category.children.sort(sortDocs);
   }
 
@@ -117,26 +120,26 @@ async function fetchMenu(key: string) {
 }
 
 export async function getMenu(key: string): Promise<MenuDoc[] | undefined> {
-  let menu = await menuCache.fetch(key);
+  const menu = await _global.menuCache.fetch(key);
   return menu || undefined;
 }
 
 async function fetchDoc(key: string): Promise<Doc> {
-  let [baseUrl, lang, version, docPath] = key.split("_:_");
-  let filename = `${docPath}.md`;
+  const [baseUrl, lang, version, docPath] = key.split("_:_");
+  const filename = `${docPath}.md`;
 
   const url = new URL(`/documentation/${lang}/${version}/${filename}`, baseUrl);
-  let response = await fetch(url.href);
+  const response = await fetch(url.href);
   if (!response.ok) throw Error(`Could not find ${filename}`);
 
-  let markdown = await response.text();
+  const markdown = await response.text();
   if (markdown === null) throw Error(`Could not find ${filename}`);
 
   try {
-    let { html, attributes } = await processMarkdown(markdown);
+    const { html, attributes } = await processMarkdown(markdown);
     let attrs: MenuDocAttributes = { title: filename };
     if (isPlainObject(attributes)) attrs = { title: filename, ...attributes };
-    let headings = createTableOfContentsFromHeadings(html);
+    const headings = createTableOfContentsFromHeadings(html);
     return { attrs, filename, html, slug: docPath, headings, children: [] };
   } catch (err) {
     console.error(`Error processing doc file ${filename}`, err);
@@ -152,9 +155,9 @@ async function fetchDoc(key: string): Promise<Doc> {
  * It uses cheerio to parse the HTML and extract the headings.
  */
 function createTableOfContentsFromHeadings(html: string) {
-  let $headings = $(html)("h2,h3");
+  const $headings = $(html)("h2,h3");
 
-  let headings = $headings.toArray().map((heading) => ({
+  const headings = $headings.toArray().map((heading) => ({
     headingLevel: heading.name,
     html: $(heading)("a").remove().end().children().html(),
     slug: heading.attributes.find((attr) => attr.name === "id")?.value,
@@ -176,9 +179,9 @@ export async function getDoc(params: {
   version: string;
   docPath: string;
 }): Promise<Doc | undefined> {
-  let { baseUrl, lang, version, docPath } = params;
-  let key = `${baseUrl}_:_${lang}_:_${version}_:_${docPath}`;
-  let doc = await docCache.fetch(key);
+  const { baseUrl, lang, version, docPath } = params;
+  const key = `${baseUrl}_:_${lang}_:_${version}_:_${docPath}`;
+  const doc = await _global.docCache.fetch(key);
   return doc || undefined;
 }
 

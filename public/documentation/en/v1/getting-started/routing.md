@@ -57,6 +57,10 @@ In this example, we define the index route `/` and specify that it should serve 
 
 Also we can have nested routes by specifying a children array of nested routes. For example the `/admin` path has `/admin/users`, `/admin/users/:id/edit` as children routes.
 
+<docs-info>
+When you have nested routes, make sure the parent route has an `<Outlet />` in order to render child routes. [Learn more about nested routes and outlets here](https://remix.run/docs/en/main/start/tutorial#nested-routes-and-outlets)
+</docs-info>
+
 With this convention, you can define your pages anywhere in the `app/` folder and just pass the path to the `file` property of the route object.
 
 <docs-info>

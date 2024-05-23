@@ -25,18 +25,17 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { env } from "@/lib/env.server";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-  let { lang = "en", version } = params;
+  const { lang = "en" } = params;
   const baseUrl = env.DOCS_BASE_URL!;
 
+  let version = params.version;
   if (!version) {
     const versions = await getVersions(baseUrl);
     version = versions[0];
   }
 
   const menuCacheKey = `${baseUrl}_:_${lang}_:_${version}`;
-
-  let menu = await getMenu(menuCacheKey);
-  let versions = await getVersions(baseUrl);
+  const [menu, versions] = await Promise.all([getMenu(menuCacheKey), getVersions(baseUrl)]);
   const [latestVersion] = versions;
 
   return json({
@@ -55,17 +54,17 @@ export const headers: HeadersFunction = () => {
 };
 
 export default function DocsLayout() {
-  let location = useLocation();
-  let detailsRef = React.useRef<HTMLDetailsElement>(null);
+  const location = useLocation();
+  const detailsRef = React.useRef<HTMLDetailsElement>(null);
 
   React.useEffect(() => {
-    let details = detailsRef.current;
+    const details = detailsRef.current;
     if (details && details.hasAttribute("open")) {
       details.removeAttribute("open");
     }
   }, [location]);
 
-  let docsContainer = React.useRef<HTMLDivElement>(null);
+  const docsContainer = React.useRef<HTMLDivElement>(null);
   useCodeBlockCopyButton(docsContainer);
 
   return (
@@ -128,7 +127,7 @@ function Footer() {
 }
 
 function Header() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <div
@@ -190,7 +189,7 @@ function Header() {
 }
 
 function VersionSelect() {
-  let { versions, lang, currentVersion } = useLoaderData<typeof loader>();
+  const { versions, lang, currentVersion } = useLoaderData<typeof loader>();
 
   // This is the same default, hover, focus style as the ColorScheme trigger
   const baseClasses =
@@ -229,8 +228,8 @@ function VersionsLabel({ label }: { label: string }) {
 }
 
 function VersionLink({ to, children }: { to: string; children: React.ReactNode }) {
-  let isActive = useIsActivePath(to);
-  let className = cx(
+  const isActive = useIsActivePath(to);
+  const className = cx(
     "flex w-full items-center gap-2 py-2 px-2 rounded-sm text-sm transition-colors duration-100",
     isActive
       ? "text-black bg-blue-200 dark:bg-blue-800 dark:text-gray-100"
@@ -253,7 +252,7 @@ function HeaderMenuLink({
   className?: string;
   children: React.ReactNode;
 }) {
-  let isActive = useIsActivePath(to);
+  const isActive = useIsActivePath(to);
 
   return (
     <Link
@@ -274,7 +273,7 @@ function HeaderMenuLink({
 
 function HeaderMenuMobile({ className = "" }: { className: string }) {
   // This is the same default, hover, focus style as the VersionSelect
-  let baseClasses =
+  const baseClasses =
     "bg-gray-100 hover:bg-gray-200 [[open]>&]:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 dark:[[open]>&]:bg-gray-700";
 
   return (
@@ -313,7 +312,7 @@ function HeaderLink({
   svgSize: string;
   title?: string;
 }) {
-  let [width, height] = svgSize.split("x");
+  const [width, height] = svgSize.split("x");
 
   return (
     <a
@@ -333,11 +332,12 @@ function HeaderLink({
 }
 
 function NavMenuMobile() {
-  let doc = useDoc();
+  const doc = useDoc();
   return (
     <div className="lg:hidden">
       <DetailsMenu className="group relative flex h-full flex-col">
         <summary
+          // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
           tabIndex={0}
           className="_no-triangle flex cursor-pointer select-none items-center gap-2 border-b border-gray-50 bg-white px-2 py-3 text-sm font-medium hover:bg-gray-50 active:bg-gray-100 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800 dark:active:bg-gray-700"
         >
@@ -377,7 +377,7 @@ function NavMenuDesktop() {
 }
 
 function Menu() {
-  let { menu, lang, currentVersion } = useLoaderData<typeof loader>();
+  const { menu, lang, currentVersion } = useLoaderData<typeof loader>();
 
   return menu ? (
     <nav>
@@ -509,7 +509,7 @@ function MenuSummary({
 }
 
 function MenuCategoryLink({ to, children }: { to: string; children: React.ReactNode }) {
-  let isActive = useIsActivePath(to);
+  const isActive = useIsActivePath(to);
 
   return (
     <Link
@@ -528,7 +528,7 @@ function MenuCategoryLink({ to, children }: { to: string; children: React.ReactN
 }
 
 function MenuLink({ to, children }: { to: string; children: React.ReactNode }) {
-  let isActive = useIsActivePath(to);
+  const isActive = useIsActivePath(to);
   return (
     <Link
       prefetch="intent"
@@ -543,23 +543,24 @@ function MenuLink({ to, children }: { to: string; children: React.ReactNode }) {
               "hover:bg-blue-100 dark:hover:bg-blue-800/50",
             ]
       )}
-      children={children}
-    />
+    >
+      {children}
+    </Link>
   );
 }
 
 function EditLink() {
-  let doc = useDoc();
-  let params = useParams();
-  let isEditableRef = params.ref === "main" || params.ref === "dev";
+  const doc = useDoc();
+  const params = useParams();
+  const isEditableRef = params.ref === "main" || params.ref === "dev";
 
   if (!doc || !isEditableRef) {
     return null;
   }
 
-  let repoUrl = "https://github.com/paterson1720/remix-breeze";
+  const repoUrl = "https://github.com/paterson1720/remix-breeze";
   // TODO: deal with translations when we add them with params.lang
-  let editUrl = `${repoUrl}/edit/${params.ref}/${doc.slug}.md`;
+  const editUrl = `${repoUrl}/edit/${params.ref}/${doc.slug}.md`;
 
   return (
     <a className="flex items-center gap-1 hover:underline" href={editUrl}>
@@ -580,36 +581,38 @@ function hasDoc(data: unknown): data is { doc: Doc } {
 }
 
 function useDoc(): Doc | null {
-  let data = useMatches().at(-1)?.data;
+  const data = useMatches().at(-1)?.data;
   if (!hasDoc(data)) return null;
   return data.doc;
 }
 
 function useIsActivePath(to: string) {
-  let { pathname } = useResolvedPath(to);
-  let navigation = useNavigation();
-  let currentLocation = useLocation();
-  let navigating = navigation.state === "loading" && navigation.formData == null;
-  let location = navigating ? navigation.location! : currentLocation;
-  let match = matchPath(pathname + "/*", location.pathname);
+  const { pathname } = useResolvedPath(to);
+  const navigation = useNavigation();
+  const currentLocation = useLocation();
+  const navigating = navigation.state === "loading" && navigation.formData == null;
+  const location = navigating ? navigation.location! : currentLocation;
+  const match = matchPath(pathname + "/*", location.pathname);
   return Boolean(match);
 }
 
 function useCodeBlockCopyButton(ref: React.RefObject<HTMLDivElement>) {
-  let location = useLocation();
+  const location = useLocation();
   React.useEffect(() => {
-    let container = ref.current;
+    const container = ref.current;
     if (!container) return;
 
-    let codeBlocks = container.querySelectorAll("[data-code-block][data-lang]:not([data-nocopy])");
-    let buttons = new Map<
+    const codeBlocks = container.querySelectorAll(
+      "[data-code-block][data-lang]:not([data-nocopy])"
+    );
+    const buttons = new Map<
       HTMLButtonElement,
       { listener: (event: MouseEvent) => void; to: number }
     >();
 
-    for (let codeBlock of codeBlocks) {
-      let button = document.createElement("button");
-      let label = document.createElement("span");
+    for (const codeBlock of codeBlocks) {
+      const button = document.createElement("button");
+      const label = document.createElement("span");
       button.type = "button";
       button.dataset.codeBlockCopy = "";
       button.addEventListener("click", listener);
@@ -620,16 +623,17 @@ function useCodeBlockCopyButton(ref: React.RefObject<HTMLDivElement>) {
       codeBlock.appendChild(button);
       buttons.set(button, { listener, to: -1 });
 
+      // eslint-disable-next-line no-inner-declarations
       function listener(event: MouseEvent) {
         event.preventDefault();
-        let pre = codeBlock.querySelector("pre");
-        let text = pre?.textContent;
+        const pre = codeBlock.querySelector("pre");
+        const text = pre?.textContent;
         if (!text) return;
         navigator.clipboard
           .writeText(text)
           .then(() => {
             button.dataset.copied = "true";
-            let to = window.setTimeout(() => {
+            const to = window.setTimeout(() => {
               window.clearTimeout(to);
               if (button) {
                 button.dataset.copied = undefined;
@@ -645,7 +649,7 @@ function useCodeBlockCopyButton(ref: React.RefObject<HTMLDivElement>) {
       }
     }
     return () => {
-      for (let [button, props] of buttons) {
+      for (const [button, props] of buttons) {
         button.removeEventListener("click", props.listener);
         button.parentElement?.removeChild(button);
         window.clearTimeout(props.to);

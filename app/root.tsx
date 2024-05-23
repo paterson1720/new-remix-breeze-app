@@ -2,13 +2,22 @@ import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import clsx from "clsx";
 import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
-import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from "@remix-run/react";
+import {
+  Links,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useLoaderData,
+  useRouteError,
+} from "@remix-run/react";
 import { PreventFlashOnWrongTheme, ThemeProvider, useTheme } from "remix-themes";
 import { ToastContainer, toast } from "react-toastify";
 
 import stylesheet from "@/styles/globals.css?url";
 import { BreezeAuthSessionProvider } from "./lib/auth/context";
 import { themeSessionResolver } from "./lib/theme-session.server";
+import InternalServerError from "./components/internal-server-error";
 import breezeToast from "./lib/breeze-toast.server";
 import auth from "./lib/auth/auth.server";
 
@@ -57,6 +66,27 @@ export function App() {
         <ScrollRestoration />
         <Scripts />
         <ToastContainer />
+      </body>
+    </html>
+  );
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+  const errorMessage = error instanceof Error ? error.message : "Unknown error";
+
+  return (
+    <html lang="en" className="dark">
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <InternalServerError message={errorMessage} />
+        <ScrollRestoration />
+        <Scripts />
       </body>
     </html>
   );

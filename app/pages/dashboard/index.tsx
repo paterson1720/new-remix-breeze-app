@@ -1,4 +1,3 @@
-import { Link } from "@remix-run/react";
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { BellIcon, Building, DiamondIcon, ShieldAlert, ShieldCheck, Text } from "lucide-react";
 import { AppLayout } from "@/pages/_layouts/app-layout";
@@ -39,77 +38,84 @@ export default function Component() {
             </div>
           </div>
           <div className="mx-auto grid items-start gap-8 sm:grid-cols-2 md:gap-12 lg:max-w-8xl lg:grid-cols-3">
-            <div className="grid gap-1 shadow-sm border border-muted-background rounded-sm p-4">
-              <h3 className="text-lg font-bold">
-                <Text className="inline-block w-6 h-6 mr-2 text-green-600" />
-                Documentation
-              </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Dive into the Remix-Breeze documentation to learn how to get started, build your
-                first app, and more. We recommend reading the documentation to get the most out of
-                the Remix-Breeze ecosystem.
-              </p>
+            <div className="grid gap-1 shadow-sm border border-muted-background rounded-sm p-4 hover:bg-foreground/5">
+              <a href="https://www.remixbreeze.com/docs">
+                <h3 className="text-lg font-bold">
+                  <Text className="inline-block w-6 h-6 mr-2 text-green-600" />
+                  Documentation
+                </h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Dive into the Remix-Breeze documentation to learn how to get started, build your
+                  first app, and more. We recommend reading the documentation to get the most out of
+                  the Remix-Breeze ecosystem.
+                </p>
+              </a>
             </div>
-            <div className="grid gap-1 shadow-sm border border-muted-background rounded-sm p-4">
-              <h3 className="text-lg font-bold">
-                <ShieldAlert className="inline-block w-6 h-6 mr-2 text-green-600" />
-                Authentication
-              </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Authentication and Registration features are built-in and ready to use, as well as
-                support for password reset and email verification. So you are free to get started
-                with what matters most: building your app.
-              </p>
+            <div className="grid gap-1 shadow-sm border border-muted-background rounded-sm p-4 hover:bg-foreground/5">
+              <a href="https://www.remixbreeze.com/docs/en/v1/authentication/remix-breeze-auth">
+                <h3 className="text-lg font-bold">
+                  <ShieldAlert className="inline-block w-6 h-6 mr-2 text-green-600" />
+                  Authentication
+                </h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Authentication and Registration features are built-in and ready to use, as well as
+                  support for password reset and email verification. So you are free to get started
+                  with what matters most: building your app.
+                </p>
+              </a>
             </div>
-            <div className="grid gap-1 shadow-sm border border-muted-background rounded-sm p-4">
-              <h3 className="text-lg font-bold">
-                <Building className="inline-block w-6 h-6 mr-2 text-green-600" />
-                CRUD Scaffolding
-              </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Remix-Breeze comes with built-in CRUD scaffolding to help you quickly build your
-                application. Designed to help you quickly generate the code you need to create,
-                read, update, and delete a resource.
-              </p>
+            <div className="grid gap-1 shadow-sm border border-muted-background rounded-sm p-4 hover:bg-foreground/5">
+              <a href="https://www.remixbreeze.com/docs/en/v1/packages/remix-breeze-cli">
+                <h3 className="text-lg font-bold">
+                  <Building className="inline-block w-6 h-6 mr-2 text-green-600" />
+                  CRUD Scaffolding
+                </h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Remix-Breeze comes with built-in CRUD scaffolding to help you quickly build your
+                  application. Designed to help you quickly generate the code you need to create,
+                  read, update, and delete a resource.
+                </p>
+              </a>
             </div>
-            <div className="grid gap-1 shadow-sm border border-muted-background rounded-sm p-4">
-              <h3 className="text-lg font-bold">
-                <DiamondIcon className="inline-block w-6 h-6 mr-2 text-green-600" />
-                @remix-breeze/router
-              </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                An optional, simple and intuitive json based routing configuration that allows you
-                to easily define your application's routes in a single{" "}
-                <em>breeze.routes.config.ts</em> file. Forget about confusing file based routing
-                conventions
-              </p>
+            <div className="grid gap-1 shadow-sm border border-muted-background rounded-sm p-4 hover:bg-foreground/5">
+              <a href="https://www.remixbreeze.com/docs/en/v1/getting-started/routing">
+                <h3 className="text-lg font-bold">
+                  <DiamondIcon className="inline-block w-6 h-6 mr-2 text-green-600" />
+                  @remix-breeze/router
+                </h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  An optional, simple and intuitive json based routing configuration that allows you
+                  to easily define your application's routes in a single{" "}
+                  <em>breeze.routes.config.ts</em> file. Forget about confusing file based routing
+                  conventions
+                </p>
+              </a>
             </div>
-            <div className="grid gap-1 shadow-sm border border-muted-background rounded-sm p-4">
-              <Link
-                to="https://www.npmjs.com/package/@remix-breeze/auth?activeTab=readme"
-                className="text-lg font-bold"
-              >
+            <div className="grid gap-1 shadow-sm border border-muted-background rounded-sm p-4 hover:bg-foreground/5">
+              <a href="https://www.remixbreeze.com/docs/en/v1/authentication/remix-breeze-auth">
                 <h3 className="text-lg font-bold">
                   <ShieldCheck className="inline-block w-6 h-6 mr-2 text-green-600" />
                   @remix-breeze/auth
                 </h3>
-              </Link>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                This kit uses @remix-breeze/auth. A flexible and powerful authentication library for
-                Remix applications. It provides the tools you need to build secure, feature-rich
-                email/passwprd based authentication with minimal configuration.
-              </p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  This kit uses @remix-breeze/auth. A flexible and powerful authentication library
+                  for Remix applications. It provides the tools you need to build secure,
+                  feature-rich email/passwprd based authentication with minimal configuration.
+                </p>
+              </a>
             </div>
-            <div className="grid gap-1 shadow-sm border border-muted-background rounded-sm p-4">
-              <h3 className="text-lg font-bold">
-                <BellIcon className="inline-block w-6 h-6 mr-2 text-green-600" />
-                @remix-breeze/toast
-              </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                This kit uses @remix-breeze/toast. A simple and lightweight toast notification
-                library for Remix applications. It provides a simple way to display toast
-                notifications in your Remix application.
-              </p>
+            <div className="grid gap-1 shadow-sm border border-muted-background rounded-sm p-4 hover:bg-foreground/5">
+              <a href="https://www.remixbreeze.com/docs/en/v1/packages/remix-breeze-toast">
+                <h3 className="text-lg font-bold">
+                  <BellIcon className="inline-block w-6 h-6 mr-2 text-green-600" />
+                  @remix-breeze/toast
+                </h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  This kit uses @remix-breeze/toast. A simple and lightweight toast notification
+                  library for Remix applications. It provides a simple way to display toast
+                  notifications in your Remix application. It's easy to use and very handy.
+                </p>
+              </a>
             </div>
           </div>
         </div>
