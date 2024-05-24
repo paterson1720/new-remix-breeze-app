@@ -32,7 +32,7 @@ export default function Component() {
                 Remix-Breeze provides the perfect starting point for your next Remix application.
                 Remix-Breeze is designed to help you ship amazing web apps like a breeze and provide
                 a developer experience that is simple, powerful, and enjoyable. We believe you
-                should love expressing your creativity through code, so we've spent time carefull
+                should love expressing your creativity through code, so we've spent time carefully
                 crafting Remix-Breeze ecosystem to be a joy to use. We hope you love it.
               </p>
             </div>
