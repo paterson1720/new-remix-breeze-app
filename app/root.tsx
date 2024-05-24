@@ -8,6 +8,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  isRouteErrorResponse,
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
@@ -74,6 +75,35 @@ export function App() {
 export function ErrorBoundary() {
   const error = useRouteError();
   const errorMessage = error instanceof Error ? error.message : "Unknown error";
+  const isRouteError = isRouteErrorResponse(error);
+
+  if (isRouteError) {
+    return (
+      <html lang="en" className="dark">
+        <head>
+          <meta charSet="utf-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <Meta />
+          <Links />
+        </head>
+        <body>
+          <div className="flex flex-1 flex-col justify-center text-white">
+            <div className="text-center leading-none">
+              <h1 className="font-mono text-[25vw]">{error.status}</h1>
+              <a
+                className="inline-block text-[8vw] underline"
+                href={`https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/${error.status}`}
+              >
+                {error.statusText}
+              </a>
+            </div>
+          </div>
+          <ScrollRestoration />
+          <Scripts />
+        </body>
+      </html>
+    );
+  }
 
   return (
     <html lang="en" className="dark">
