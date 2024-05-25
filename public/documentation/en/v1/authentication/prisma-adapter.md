@@ -5,7 +5,7 @@ order: 3
 
 ## Prisma Models
 
-To use the prisma adapter, make sure you have the following models in your `prisma.schema` file:
+To use the prisma adapter, make sure you have the following models in your `schema.prisma` file:
 
 ```js
 model User {

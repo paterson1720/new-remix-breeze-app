@@ -56,7 +56,7 @@ By running this command, Remix-Breeze will automatically do the followings.
    - `posts/edit.tsx`
    - `posts/delete.ts`
 
-3. Add the `Post` Prisma model to the `prisma/prisma.schema` file, with the specified fields and types:
+3. Add the `Post` Prisma model to the `prisma/schema.prisma` file, with the specified fields and types:
 
 ```js
 model Post {

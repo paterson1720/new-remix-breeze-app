@@ -7,10 +7,5 @@ import breezeRouter from "./app/lib/breeze-router.server";
 installGlobals();
 
 export default defineConfig({
-  plugins: [
-    remix({
-      routes: breezeRouter.routes,
-    }),
-    tsconfigPaths(),
-  ],
+  plugins: [remix({ routes: breezeRouter.routes }), tsconfigPaths()],
 });

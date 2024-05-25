@@ -54,7 +54,7 @@ npx @remix-breeze/cli g-crud -r posts -m "title:string content:text isPublished:
 
 **Note**: For the first time it might prompt you to install the CLI. Type "y" to accept.
 
-After the command executed successfully, you'll get an overview of all the files that were created in the project and the model `Post` will be added to the `prisma/prisma.schema` file.
+After the command executed successfully, you'll get an overview of all the files that were created in the project and the model `Post` will be added to the `prisma/schema.prisma` file.
 
 ### Regenerate the Prisma client
 
