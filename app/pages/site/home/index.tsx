@@ -40,6 +40,8 @@ export default function Component() {
             <a
               className="inline-flex h-10 items-center justify-center rounded-md bg-emerald-600 px-8 text-sm font-medium text-gray-50 shadow transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 "
               href="https://remixbreeze.com/docs"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Read the Documentation
             </a>
@@ -47,7 +49,7 @@ export default function Component() {
 
           <div>
             <ul className="flex gap-4 items-center text-gray-500 mt-4 dark:text-gray-400 mx-auto">
-              <a href="https://remixbreeze.com/docs">
+              <a href="https://discord.gg/W7774VAbSM" target="_blank" rel="noopener noreferrer">
                 <li className="flex flex-col items-center border rounded-md p-4 hover:bg-blue-100/20">
                   <svg aria-hidden className="h-6 w-6">
                     <use href={`${iconsHref}#discord`} />
@@ -55,13 +57,17 @@ export default function Component() {
                   <span className="text-sm">Join our Discord</span>
                 </li>
               </a>
-              <a href="https://discord.gg/W7774VAbSM" target="_blank">
+              <a href="https://twitter.com/Paterson1720" target="_blank">
                 <li className="flex flex-col items-center border rounded-md p-4 hover:bg-blue-100/20">
                   <TwitterIcon />
                   <span className="text-sm">Follow The Creator</span>
                 </li>
               </a>
-              <a href="https://github.com/paterson1720/new-remix-breeze-app">
+              <a
+                href="https://github.com/paterson1720/new-remix-breeze-app"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <li className="flex flex-col items-center border rounded-md p-4 hover:bg-blue-100/20">
                   <svg aria-hidden className="h-6 w-6">
                     <use href={`${iconsHref}#github`} />

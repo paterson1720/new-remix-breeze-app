@@ -39,7 +39,7 @@ export default function Component() {
           </div>
           <div className="mx-auto grid items-start gap-8 sm:grid-cols-2 md:gap-12 lg:max-w-8xl lg:grid-cols-3">
             <div className="grid gap-1 shadow-sm border border-muted-background rounded-sm p-4 hover:bg-foreground/5">
-              <a href="https://www.remixbreeze.com/docs">
+              <a href="https://www.remixbreeze.com/docs" target="_blank" rel="noopener noreferrer">
                 <h3 className="text-lg font-bold">
                   <Text className="inline-block w-6 h-6 mr-2 text-green-600" />
                   Documentation
@@ -52,7 +52,11 @@ export default function Component() {
               </a>
             </div>
             <div className="grid gap-1 shadow-sm border border-muted-background rounded-sm p-4 hover:bg-foreground/5">
-              <a href="https://www.remixbreeze.com/docs/en/v1/authentication/remix-breeze-auth">
+              <a
+                href="https://www.remixbreeze.com/docs/en/v1/authentication/remix-breeze-auth"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <h3 className="text-lg font-bold">
                   <ShieldAlert className="inline-block w-6 h-6 mr-2 text-green-600" />
                   Authentication
@@ -65,7 +69,11 @@ export default function Component() {
               </a>
             </div>
             <div className="grid gap-1 shadow-sm border border-muted-background rounded-sm p-4 hover:bg-foreground/5">
-              <a href="https://www.remixbreeze.com/docs/en/v1/packages/remix-breeze-cli">
+              <a
+                href="https://www.remixbreeze.com/docs/en/v1/packages/remix-breeze-cli"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <h3 className="text-lg font-bold">
                   <Building className="inline-block w-6 h-6 mr-2 text-green-600" />
                   CRUD Scaffolding
@@ -78,7 +86,11 @@ export default function Component() {
               </a>
             </div>
             <div className="grid gap-1 shadow-sm border border-muted-background rounded-sm p-4 hover:bg-foreground/5">
-              <a href="https://www.remixbreeze.com/docs/en/v1/getting-started/routing">
+              <a
+                href="https://www.remixbreeze.com/docs/en/v1/getting-started/routing"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <h3 className="text-lg font-bold">
                   <DiamondIcon className="inline-block w-6 h-6 mr-2 text-green-600" />
                   @remix-breeze/router
@@ -92,7 +104,11 @@ export default function Component() {
               </a>
             </div>
             <div className="grid gap-1 shadow-sm border border-muted-background rounded-sm p-4 hover:bg-foreground/5">
-              <a href="https://www.remixbreeze.com/docs/en/v1/authentication/remix-breeze-auth">
+              <a
+                href="https://www.remixbreeze.com/docs/en/v1/authentication/remix-breeze-auth"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <h3 className="text-lg font-bold">
                   <ShieldCheck className="inline-block w-6 h-6 mr-2 text-green-600" />
                   @remix-breeze/auth
@@ -105,7 +121,11 @@ export default function Component() {
               </a>
             </div>
             <div className="grid gap-1 shadow-sm border border-muted-background rounded-sm p-4 hover:bg-foreground/5">
-              <a href="https://www.remixbreeze.com/docs/en/v1/packages/remix-breeze-toast">
+              <a
+                href="https://www.remixbreeze.com/docs/en/v1/packages/remix-breeze-toast"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <h3 className="text-lg font-bold">
                   <BellIcon className="inline-block w-6 h-6 mr-2 text-green-600" />
                   @remix-breeze/toast
