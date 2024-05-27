@@ -6,18 +6,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function getMappedErrors<T>(errors: z.ZodError<T>["issues"]) {
-  const validationErrors: Record<string, { path: string; message: string; code: string }> = {};
-  for (const error of errors) {
-    validationErrors[error.path.join(".")] = {
-      path: error.path.join("."),
-      message: error.message,
-      code: error.code,
-    };
-  }
-  return validationErrors;
-}
-
 export const requiredInProduction: z.RefinementEffect<string | undefined>["refinement"] = (
   value,
   ctx

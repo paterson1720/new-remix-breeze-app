@@ -2,8 +2,8 @@ import { z } from "zod";
 import auth from "@/lib/auth/auth.server";
 import { json } from "@remix-run/node";
 import breezeToast from "@/lib/breeze-toast.server";
-import { getMappedErrors } from "@/lib/utils";
-import { FormIntent } from "../../../lib/types/common.types";
+import { FormIntent } from "@/lib/types/common.types";
+import { breezeValidator } from "@/lib/breeze-validator";
 
 export const validationSchema = z
   .object({
@@ -27,18 +27,23 @@ export const validationSchema = z
   });
 
 export default async function changeUserPasswordAction(userId: string, formData: FormData) {
-  const formEntriesObj = Object.fromEntries(formData.entries());
+  const validation = await breezeValidator.validateFormData({
+    key: FormIntent.ChangePassword,
+    zodSchema: validationSchema,
+    formData,
+  });
 
-  const parseResult = validationSchema.safeParse(formEntriesObj);
-  if (parseResult.error) {
-    const errors = getMappedErrors(parseResult.error.issues);
-    return json({ formErrors: { [FormIntent.ChangePassword]: errors } }, { status: 400 });
+  if (validation.formErrors) {
+    return json(
+      { formErrors: { [FormIntent.ChangePassword]: validation.formErrors } },
+      { status: 400 }
+    );
   }
 
   const { error } = await auth.changePassword({
     userId,
-    currentPassword: parseResult.data.currentPassword,
-    newPassword: parseResult.data.newPassword,
+    currentPassword: validation.data.currentPassword,
+    newPassword: validation.data.newPassword,
   });
 
   if (error) {
