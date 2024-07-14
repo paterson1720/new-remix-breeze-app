@@ -1,4 +1,4 @@
-import { BreezeAuthSessionUser } from "@remix-breeze/auth";
+import { BreezeAuthSessionUser } from "@/lib/breeze-auth";
 import { PropsWithChildren, createContext, useContext } from "react";
 
 interface BreezeAuthSessionContext {

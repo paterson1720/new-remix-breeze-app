@@ -34,10 +34,7 @@ export default async function changeUserPasswordAction(userId: string, formData:
   });
 
   if (validation.formErrors) {
-    return json(
-      { formErrors: { [FormIntent.ChangePassword]: validation.formErrors } },
-      { status: 400 }
-    );
+    return json({ formErrors: validation.formErrors }, { status: 400 });
   }
 
   const { error } = await auth.changePassword({
